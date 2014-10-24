@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-	//Dao
-	public final static String STORENAME = "kvstore";
-	public final static String HOSTNAME = "localhost";
-	public final static String HOSTPORT = "5000";
+	//Dao - Não mais usado
+	//public final static String STORENAME = "kvstore";
+	//public final static String HOSTNAME = "localhost";
+	//public final static String HOSTPORT = "5000";
 	
 	//Twitter Connection
 	public final static String TWITTERCONSUMERKEY = "mpbw8VzN1xBO4Gefd0GSpg";
@@ -37,10 +37,10 @@ public class Constants {
 	
 	//PATH Classifier
 	public final static String PATH = "classifier";
-	public final static String CLASSIFIER_PATH = "classifier"+File.separator+"classifier.txt";
-	public final static String NEGATIVE_PATH = "classifier"+File.separator+"negative"; 
-	public final static String NEUTRAL_PATH = "classifier"+File.separator+"neutral"; 
-	public final static String POSITIVE_PATH = "classifier"+File.separator+"positive"; 
+	public final static String CLASSIFIER_PATH = PATH + File.separator+"classifier.txt";
+	public final static String NEGATIVE_PATH = PATH + File.separator+"negative"; 
+	public final static String NEUTRAL_PATH = PATH + File.separator+"neutral"; 
+	public final static String POSITIVE_PATH = PATH + File.separator+"positive"; 
 	
 	//
 	public final static String POSITIVE = "positive";

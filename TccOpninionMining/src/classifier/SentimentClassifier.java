@@ -14,7 +14,7 @@ public class SentimentClassifier {
 	
 	public SentimentClassifier(){
 		try{
-			InputStream is = new FileInputStream("teste.bin");		
+			InputStream is = new FileInputStream("trained_file.bin");		
 			m = new DoccatModel(is);
 		}
 		catch (IOException e) {

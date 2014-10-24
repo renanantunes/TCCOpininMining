@@ -8,7 +8,7 @@ import gui.MainWindow;
 import java.util.ArrayList;
 
 import utils.Constants;
-import utils.GuiUtils;
+//import utils.GuiUtils;
 import beans.Tweet;
 
 public class MainClass {
@@ -30,7 +30,7 @@ public class MainClass {
 			TwitterQueryManager tqm = new TwitterQueryManager(mwf);
 			for(String inQuery: keyWords){
 				tqm.performQuery(inQuery, mwf.getQuantity());
-				GuiUtils.populateTable();
+				//GuiUtils.populateTable();
 			}
 		}
 	}

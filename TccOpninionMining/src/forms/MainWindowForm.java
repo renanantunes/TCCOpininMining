@@ -4,6 +4,10 @@ public class MainWindowForm {
 	private String keyWords;
 	private String fetchType;
 	private int quantity;
+	//result attributes
+	private int positive;
+	private int negative;
+	private int neutral;
 	public String getKeyWords() {
 		return keyWords;
 	}
@@ -22,7 +26,23 @@ public class MainWindowForm {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-	
+	public int getPositive() {
+		return positive;
+	}
+	public void setPositive(int positive) {
+		this.positive = positive;
+	}
+	public int getNegative() {
+		return negative;
+	}
+	public void setNegative(int negative) {
+		this.negative = negative;
+	}
+	public int getNeutral() {
+		return neutral;
+	}
+	public void setNeutral(int neutral) {
+		this.neutral = neutral;
+	}	
 }
 

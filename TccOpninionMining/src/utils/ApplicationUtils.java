@@ -1,5 +1,8 @@
 package utils;
 
+import forms.MainWindowForm;
+import gui.MainWindow;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -17,7 +20,7 @@ public class ApplicationUtils {
 		return formatedDate;
 	}
 	
-	public static String getRatingCount(){
+	public static MainWindowForm getRatingCount(){
 		int pos = 0;
 		int neg = 0;
 		int neu = 0;
@@ -36,9 +39,11 @@ public class ApplicationUtils {
 				}
 
 		}
-		
-		String result = pos + Constants.PIPE_REGEX + neg + Constants.PIPE_REGEX + neu;
-		return result;
+		MainWindowForm mwf = new MainWindowForm();
+		mwf.setPositive(pos);
+		mwf.setNegative(neg);
+		mwf.setNeutral(neu);
+		return mwf;
 	}
 	
 

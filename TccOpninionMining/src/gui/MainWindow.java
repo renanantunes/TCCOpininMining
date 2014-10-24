@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import main.MainClass;
+import utils.ApplicationUtils;
 import utils.Constants;
 import forms.MainWindowForm;
 
@@ -111,19 +112,19 @@ public class MainWindow {
 		TF_qtd.setBounds(93, 88, 43, 20);
 		panel.add(TF_qtd);
 		TF_qtd.setColumns(10);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
 		panel_1.setBounds(439, 11, 360, 119);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblQuantidadeColetada = new JLabel("Quantidade Coletada:");
+		final JLabel lblQuantidadeColetada = new JLabel("Quantidade Coletada:");
 		lblQuantidadeColetada.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblQuantidadeColetada.setBounds(10, 11, 184, 25);
 		panel_1.add(lblQuantidadeColetada);
 		
-		JLabel LBL_quantidade_coletada = new JLabel("");
+		final JLabel LBL_quantidade_coletada = new JLabel("100");
 		LBL_quantidade_coletada.setFont(new Font("Tahoma", Font.BOLD, 15));
 		LBL_quantidade_coletada.setBounds(181, 18, 46, 14);
 		panel_1.add(LBL_quantidade_coletada);
@@ -143,17 +144,17 @@ public class MainWindow {
 		lblNeutro.setBounds(283, 47, 67, 25);
 		panel_1.add(lblNeutro);
 		
-		JLabel LBL_positive = new JLabel("");
+		final JLabel LBL_positive = new JLabel("10");
 		LBL_positive.setFont(new Font("Tahoma", Font.BOLD, 15));
 		LBL_positive.setBounds(10, 82, 98, 26);
 		panel_1.add(LBL_positive);
 		
-		JLabel LBL_Negative = new JLabel("");
+		final JLabel LBL_Negative = new JLabel("10");
 		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
 		LBL_Negative.setBounds(129, 82, 98, 26);
 		panel_1.add(LBL_Negative);
 		
-		JLabel LBL_Neutral = new JLabel("");
+		final JLabel LBL_Neutral = new JLabel("10");
 		LBL_Neutral.setFont(new Font("Tahoma", Font.BOLD, 15));
 		LBL_Neutral.setBounds(252, 82, 98, 26);
 		panel_1.add(LBL_Neutral);
@@ -183,6 +184,14 @@ public class MainWindow {
 					
 					mwf.setKeyWords(TF_Search.getText());
 					MainClass.initializeWork(mwf);
+					mwf = ApplicationUtils.getRatingCount();
+					
+					LBL_positive.setText(""+mwf.getPositive());
+					LBL_Neutral.setText(""+mwf.getNeutral());
+					LBL_Negative.setText(""+mwf.getNegative());
+					
+					int total = mwf.getNegative()+mwf.getPositive()+mwf.getNeutral();
+					LBL_quantidade_coletada.setText(""+total);
 				}
 			}
 		});

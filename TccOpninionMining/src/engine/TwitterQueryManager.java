@@ -48,14 +48,11 @@ public class TwitterQueryManager {
 		
 		int count = 0;
 		QueryResult queryResult;
-		try
-		{
-			do
-			{
+		try{
+			do{
 				queryResult = twitter.search(query);
 				List<Status> tweets = queryResult.getTweets();
-				for(int i=0; i < tweets.size() && count < amount; i++)
-				{
+				for(int i=0; i < tweets.size() && count < amount; i++){
 					count++;
 					Status status = tweets.get(i);
 					Tweet tweet = new Tweet();
@@ -77,8 +74,7 @@ public class TwitterQueryManager {
 				}
 			} while((query = queryResult.nextQuery()) != null && count < amount);
 		}
-		catch(TwitterException e)
-		{
+		catch(TwitterException e){
 			System.err.println("== error TwitterQueryManager.performQuery(" + inQuery + "," + amount + ") " + e);
 		}
 	}

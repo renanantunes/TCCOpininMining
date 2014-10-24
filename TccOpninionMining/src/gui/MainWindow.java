@@ -12,19 +12,29 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import main.MainClass;
+import utils.Constants;
+import forms.MainWindowForm;
+
 public class MainWindow {
 
 	private JFrame frame;
 	private JTextField TF_Search;
 	private JTextField TF_qtd;
-	private Table table;
+	public static Table table;
+	private JRadioButton rdbtnPorBusca; 
+	private JRadioButton rdbtnStream;
 
 	/**
 	 * Launch the application.
@@ -75,18 +85,20 @@ public class MainWindow {
 		lblTermosSeparadosPor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JLabel lblTipoDeColeta = new JLabel("Tipo de coleta:");
-		lblTipoDeColeta.setBounds(10, 62, 77, 14);
+		lblTipoDeColeta.setBounds(10, 62, 89, 14);
 		panel.add(lblTipoDeColeta);
 		
-		JRadioButton rdbtnPorBusca = new JRadioButton("Busca");
-		rdbtnPorBusca.setEnabled(false);
-		rdbtnPorBusca.setBounds(168, 58, 70, 23);
+		rdbtnPorBusca = new JRadioButton("Busca");
+		rdbtnPorBusca.setBounds(186, 58, 70, 23);
 		panel.add(rdbtnPorBusca);
 		
-		JRadioButton rdbtnStream = new JRadioButton("Stream");
-		rdbtnStream.setEnabled(false);
-		rdbtnStream.setBounds(93, 58, 109, 23);
+		rdbtnStream = new JRadioButton("Stream");
+		rdbtnStream.setBounds(105, 58, 79, 23);
 		panel.add(rdbtnStream);
+		
+		ButtonGroup searchRadioGroup = new ButtonGroup();
+		searchRadioGroup.add(rdbtnStream);
+		searchRadioGroup.add(rdbtnPorBusca);
 		
 		JButton BTN_Search = new JButton("Coletar");
 		BTN_Search.setBounds(320, 85, 89, 23);
@@ -97,7 +109,6 @@ public class MainWindow {
 		panel.add(lblQuantidade);
 		
 		TF_qtd = new JTextField();
-		TF_qtd.setEnabled(false);
 		TF_qtd.setBounds(93, 88, 43, 20);
 		panel.add(TF_qtd);
 		TF_qtd.setColumns(10);
@@ -167,5 +178,40 @@ public class MainWindow {
 		scrollPane.setBounds(10, 6, 769, 378);
 		
 		panel_2.add(scrollPane);
+		
+		BTN_Search.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(validate()){
+					MainWindowForm mwf = new MainWindowForm();
+					if(rdbtnPorBusca.isSelected()){
+						mwf.setFetchType(Constants.QUERYTYPE);
+						mwf.setQuantity(Integer.parseInt(TF_qtd.getText()));
+					}else if(rdbtnStream.isSelected()){
+						mwf.setFetchType(Constants.STREAMTYPE);
+					}
+					
+					mwf.setKeyWords(TF_Search.getText());
+					MainClass.initializeWork(mwf);
+				}
+			}
+		});
+	}
+	
+	public boolean validate(){
+		if(TF_Search.getText().length()<1){
+			JOptionPane.showMessageDialog(null, "Insira o(s) termo(s) a ser pesquisado", "Erro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if(!rdbtnPorBusca.isSelected() && !rdbtnStream.isSelected()){
+			JOptionPane.showMessageDialog(null, "Selecione um tipo de busca", "Erro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if(rdbtnPorBusca.isSelected() && TF_qtd.getText().length()<1){
+			JOptionPane.showMessageDialog(null, "Insira a quantidade a ser coletada", "Erro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		return true;
 	}
 }

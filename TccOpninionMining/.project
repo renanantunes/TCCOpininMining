@@ -3,6 +3,7 @@
 	<name>TccOpninionMining</name>
 	<comment></comment>
 	<projects>
+		<project>OpenlpAPI</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

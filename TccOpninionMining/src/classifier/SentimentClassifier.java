@@ -7,6 +7,7 @@ import java.io.InputStream;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 
+
 public class SentimentClassifier {
 	String[] categories;
 	static DoccatModel m = null;

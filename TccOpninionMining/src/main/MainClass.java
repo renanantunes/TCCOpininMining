@@ -8,6 +8,7 @@ import gui.MainWindow;
 import java.util.ArrayList;
 
 import utils.Constants;
+import utils.GuiUtils;
 import beans.Tweet;
 
 public class MainClass {
@@ -22,16 +23,14 @@ public class MainClass {
 	public static void initializeWork(MainWindowForm mwf){
 		String keyWords [] = mwf.getKeyWords().split(Constants.COMMA_REGEX);
 		
-		if(mwf.getFetchType().equals(Constants.STREAMTYPE))
-		{
+		if(mwf.getFetchType().equals(Constants.STREAMTYPE)){
 			TwitterListener.createListener(mwf);
 		}
-		else
-		{
+		else{
 			TwitterQueryManager tqm = new TwitterQueryManager(mwf);
-			for(String inQuery: keyWords)
-			{
+			for(String inQuery: keyWords){
 				tqm.performQuery(inQuery, mwf.getQuantity());
+				GuiUtils.populateTable();
 			}
 		}
 	}

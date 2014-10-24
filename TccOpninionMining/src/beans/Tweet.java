@@ -37,6 +37,10 @@ public class Tweet{
 		this.rating = rating;
 	}
 	
-	
+	public String toString()
+	{	
+		return "ID: " + this.getId() + "\nUser: " + this.getUser() + "\n" + this.getTweet() + "\n"
+				+ "Date: " + this.getDate() + "\nClassificação: " + this.getRating();
+	}
 
 }

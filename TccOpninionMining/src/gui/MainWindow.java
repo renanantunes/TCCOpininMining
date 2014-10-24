@@ -32,7 +32,6 @@ public class MainWindow {
 	private JFrame frame;
 	private JTextField TF_Search;
 	private JTextField TF_qtd;
-	//public static Table table;
 	private JRadioButton rdbtnPorBusca; 
 	private JRadioButton rdbtnStream;
 
@@ -112,16 +111,7 @@ public class MainWindow {
 		TF_qtd.setBounds(93, 88, 43, 20);
 		panel.add(TF_qtd);
 		TF_qtd.setColumns(10);
-		/*
-		table = new Table();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Classifica\u00E7\u00E3o", "Tweet"
-			}
-		));
-		*/
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
 		panel_1.setBounds(439, 11, 360, 119);

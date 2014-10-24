@@ -33,6 +33,7 @@ public class TwitterManager
 	private SentimentClassifier sentimentClassifier;
 	private Twitter twitter;
 	private TwitterStream twitterStream;
+	private String formatedDate;
 	
 	public TwitterManager(final MainWindowForm mwf)
 	{
@@ -56,10 +57,6 @@ public class TwitterManager
 		query.setCount(amount);
 		query.setLang(Constants.LANGUAGE[0]);
 		
-		String formatedDate = ApplicationUtils.createFormatDate(Constants.DATEFORMAT1);
-
-		
-		
 		int count = 0;
 		QueryResult queryResult;
 		try
@@ -72,18 +69,13 @@ public class TwitterManager
 				{
 					count++;
 					Status status = tweets.get(i);
-					//TODO Criar metodo para popular a classe tweet, talvez no proprio construtor dela passando o Status
-					Tweet tweet = new Tweet();
-					tweet.setId(status.getId());
-					tweet.setUser(status.getUser().getScreenName());
-					tweet.setTweet(status.getText());
-					tweet.setDate(formatedDate);
-	            	tweet.setRating(sentimentClassifier.openNlpClassify(tweet.getTweet()));
+					
+					Tweet tweet = createTweet(status);
 	            	
 	            	MainClass.tweetList.add(tweet); //TODO verificar a necessidade disso
 	            	
 	            	System.out.println(tweet.toString());
-	            	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
+	            	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
 				}
 			} while((query = queryResult.nextQuery()) != null && count < amount);
 		}
@@ -102,18 +94,11 @@ public class TwitterManager
 
             @Override
             public void onStatus(Status status) 
-            {
-            	String formatedDate = ApplicationUtils.createFormatDate(Constants.DATEFORMAT1);
-            	
-            	Tweet tweet = new Tweet();
-            	tweet.setId(status.getId());
-            	tweet.setUser(status.getUser().getScreenName());
-            	tweet.setTweet(status.getText());
-            	tweet.setDate(formatedDate);
-            	tweet.setRating(sentimentClassifier.openNlpClassify(tweet.getTweet()));
-            	
+            {	
+            	Tweet tweet = createTweet(status);
+            	MainClass.tweetList.add(tweet);
             	System.out.println(tweet.toString());
-            	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
+            	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
             }
         	
             @Override
@@ -145,5 +130,19 @@ public class TwitterManager
 	{
 		System.out.println("Shutdown");
 	    twitterStream.shutdown();
+	}
+	
+	private Tweet createTweet(Status status)
+	{
+		formatedDate = ApplicationUtils.createFormatDate(Constants.DATEFORMAT1);
+		
+		Tweet tweet = new Tweet();
+		tweet.setId(status.getId());
+    	tweet.setUser(status.getUser().getScreenName());
+    	tweet.setTweet(status.getText());
+    	tweet.setDate(formatedDate);
+    	tweet.setRating(sentimentClassifier.openNlpClassify(tweet.getTweet()));
+    	
+		return tweet;
 	}
 }

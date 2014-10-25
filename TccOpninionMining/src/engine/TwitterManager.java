@@ -1,6 +1,5 @@
 package engine;
 
-import java.io.File;
 import java.util.List;
 
 import main.MainClass;
@@ -22,23 +21,18 @@ import utils.ApplicationUtils;
 import utils.Constants;
 import beans.Tweet;
 import classifier.SentimentClassifier;
-import forms.MainWindowForm;
-import gui.TableHandler;
 
 public class TwitterManager 
 {
 	private Configuration config;
-	private static File file = null;
-	private final MainWindowForm mwf;
 	private SentimentClassifier sentimentClassifier;
 	private Twitter twitter;
 	private TwitterStream twitterStream;
 	private String formatedDate;
 	
-	public TwitterManager(final MainWindowForm mwf)
+	public TwitterManager()
 	{
-		this.mwf = mwf;
-		
+
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true);
 		cb.setOAuthConsumerKey(Constants.TWITTERCONSUMERKEY);
@@ -81,11 +75,11 @@ public class TwitterManager
 		}
 		catch(TwitterException e)
 		{
-			System.err.println("== error TwitterQueryManager.performQuery(" + inQuery + "," + amount + ") " + e);
+			System.err.println("== error TwitterManager.performQuery(" + inQuery + "," + amount + ") " + e);
 		}
 	}
 	
-	public void startListener(final MainWindowForm mwf)
+	public void startListener(String[]keywords)
 	{
 		twitterStream = new TwitterStreamFactory(config).getInstance();
 		
@@ -119,7 +113,7 @@ public class TwitterManager
         
         FilterQuery fq = new FilterQuery();
 
-	    fq.track(mwf.getKeyWords().split(Constants.COMMA_REGEX));
+	    fq.track(keywords);
 	    fq.language(Constants.LANGUAGE);
 
 	    twitterStream.addListener(listener);

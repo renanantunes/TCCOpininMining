@@ -1,7 +1,6 @@
 package main;
 
-import engine.TwitterListener;
-import engine.TwitterQueryManager;
+import engine.TwitterManager;
 import forms.MainWindowForm;
 import gui.MainWindow;
 
@@ -22,15 +21,14 @@ public class MainClass {
 	
 	public static void initializeWork(MainWindowForm mwf){
 		String keyWords [] = mwf.getKeyWords().split(Constants.COMMA_REGEX);
+		TwitterManager manager = new TwitterManager();
 		
 		if(mwf.getFetchType().equals(Constants.STREAMTYPE)){
-			TwitterListener.createListener(mwf);
+			manager.startListener(keyWords);
 		}
 		else{
-			TwitterQueryManager tqm = new TwitterQueryManager(mwf);
 			for(String inQuery: keyWords){
-				tqm.performQuery(inQuery, mwf.getQuantity());
-				//GuiUtils.populateTable();
+				manager.doQuery(inQuery, mwf.getQuantity());
 			}
 		}
 	}

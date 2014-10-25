@@ -1,32 +1,27 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import main.MainClass;
 import utils.ApplicationUtils;
 import utils.Constants;
 import forms.MainWindowForm;
+import javax.swing.ScrollPaneConstants;
 
 public class MainWindow {
 
@@ -64,7 +59,7 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 825, 613);
+		frame.setBounds(100, 100, 890, 613);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -115,7 +110,7 @@ public class MainWindow {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
-		panel_1.setBounds(439, 11, 360, 119);
+		panel_1.setBounds(439, 11, 425, 119);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -124,9 +119,9 @@ public class MainWindow {
 		lblQuantidadeColetada.setBounds(10, 11, 184, 25);
 		panel_1.add(lblQuantidadeColetada);
 		
-		final JLabel LBL_quantidade_coletada = new JLabel("100");
+		final JLabel LBL_quantidade_coletada = new JLabel("");
 		LBL_quantidade_coletada.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_quantidade_coletada.setBounds(181, 18, 46, 14);
+		LBL_quantidade_coletada.setBounds(181, 16, 46, 14);
 		panel_1.add(LBL_quantidade_coletada);
 		
 		JLabel lblNewLabel = new JLabel("Positivo");
@@ -136,37 +131,37 @@ public class MainWindow {
 		
 		JLabel label = new JLabel("Negativo");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label.setBounds(138, 47, 67, 25);
+		label.setBounds(170, 47, 67, 25);
 		panel_1.add(label);
 		
 		JLabel lblNeutro = new JLabel("Neutro");
 		lblNeutro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNeutro.setBounds(283, 47, 67, 25);
+		lblNeutro.setBounds(313, 47, 67, 25);
 		panel_1.add(lblNeutro);
 		
-		final JLabel LBL_positive = new JLabel("10");
+		final JLabel LBL_positive = new JLabel("");
 		LBL_positive.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_positive.setBounds(10, 82, 98, 26);
+		LBL_positive.setBounds(20, 65, 98, 26);
 		panel_1.add(LBL_positive);
 		
-		final JLabel LBL_Negative = new JLabel("10");
+		final JLabel LBL_Negative = new JLabel("");
 		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_Negative.setBounds(129, 82, 98, 26);
+		LBL_Negative.setBounds(181, 65, 98, 26);
 		panel_1.add(LBL_Negative);
 		
-		final JLabel LBL_Neutral = new JLabel("10");
+		final JLabel LBL_Neutral = new JLabel("");
 		LBL_Neutral.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_Neutral.setBounds(252, 82, 98, 26);
+		LBL_Neutral.setBounds(323, 65, 98, 26);
 		panel_1.add(LBL_Neutral);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-		panel_2.setBounds(10, 141, 789, 395);
+		panel_2.setBounds(10, 141, 854, 395);
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane(TableHandler.getTable());
-		scrollPane.setBounds(10, 6, 769, 378);
+		scrollPane.setBounds(10, 6, 834, 378);
 		
 		panel_2.add(scrollPane);
 		
@@ -184,6 +179,9 @@ public class MainWindow {
 					
 					mwf.setKeyWords(TF_Search.getText());
 					MainClass.initializeWork(mwf);
+					if(rdbtnStream.isSelected()){
+						StreamWindow.init();
+					}
 					mwf = ApplicationUtils.getRatingCount();
 					
 					LBL_positive.setText(""+mwf.getPositive());
@@ -192,6 +190,8 @@ public class MainWindow {
 					
 					int total = mwf.getNegative()+mwf.getPositive()+mwf.getNeutral();
 					LBL_quantidade_coletada.setText(""+total);
+					
+					ApplicationUtils.populateTable();
 				}
 			}
 		});

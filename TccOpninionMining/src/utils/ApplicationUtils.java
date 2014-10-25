@@ -2,6 +2,7 @@ package utils;
 
 import forms.MainWindowForm;
 import gui.MainWindow;
+import gui.TableHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,6 +47,11 @@ public class ApplicationUtils {
 		return mwf;
 	}
 	
+	public static void populateTable(){
+		for (Tweet tweet : MainClass.tweetList) {
+				TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
+			}
+	}
 
 	
 }

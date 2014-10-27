@@ -1,5 +1,7 @@
 package engine;
 
+import gui.TableHandler;
+
 import java.util.List;
 
 import main.MainClass;
@@ -27,7 +29,7 @@ public class TwitterManager
 	private Configuration config;
 	private SentimentClassifier sentimentClassifier;
 	private Twitter twitter;
-	private TwitterStream twitterStream;
+	private static TwitterStream twitterStream;
 	private String formatedDate;
 	
 	public TwitterManager()
@@ -85,12 +87,14 @@ public class TwitterManager
 		
 		StatusListener listener = new StatusListener() 
 		{
+		
 
             @Override
             public void onStatus(Status status) 
             {	
             	Tweet tweet = createTweet(status);
             	MainClass.tweetList.add(tweet);
+            	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
             	System.out.println(tweet.toString());
             	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
             }
@@ -120,10 +124,11 @@ public class TwitterManager
 	    twitterStream.filter(fq);
 	}
 	
-	public void stopListener()
+	public static void stopListener()
 	{
 		System.out.println("Shutdown");
 	    twitterStream.shutdown();
+	    return;
 	}
 	
 	private Tweet createTweet(Status status)

@@ -1,10 +1,12 @@
 package engine;
 
+import gui.StreamDialog;
 import gui.TableHandler;
 
 import java.util.List;
 
 import main.MainClass;
+import twitter4j.ConnectionLifeCycleListener;
 import twitter4j.FilterQuery;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -31,6 +33,7 @@ public class TwitterManager
 	private Twitter twitter;
 	private static TwitterStream twitterStream;
 	private String formatedDate;
+	
 	
 	public TwitterManager()
 	{
@@ -84,7 +87,6 @@ public class TwitterManager
 	public void startListener(String[]keywords)
 	{
 		twitterStream = new TwitterStreamFactory(config).getInstance();
-		
 		StatusListener listener = new StatusListener() 
 		{
 		
@@ -95,8 +97,9 @@ public class TwitterManager
             	Tweet tweet = createTweet(status);
             	MainClass.tweetList.add(tweet);
             	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
+            	StreamDialog.textArea.setText(StreamDialog.textArea.getText()+"\n"+tweet.getTweet());
             	System.out.println(tweet.toString());
-            	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
+            	
             }
         	
             @Override
@@ -122,13 +125,34 @@ public class TwitterManager
 
 	    twitterStream.addListener(listener);
 	    twitterStream.filter(fq);
+
+	    StreamDialog.lblNewLabel.setText("Conectando...");
+	    twitterStream.addConnectionLifeCycleListener(new ConnectionLifeCycleListener() {
+			
+			@Override
+			public void onDisconnect() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onConnect() {
+				StreamDialog.lblNewLabel.setText("Conectado");
+				StreamDialog.btn_stop.setEnabled(true);
+			}
+			
+			@Override
+			public void onCleanUp() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	public static void stopListener()
 	{
 		System.out.println("Shutdown");
 	    twitterStream.shutdown();
-	    return;
 	}
 	
 	private Tweet createTweet(Status status)

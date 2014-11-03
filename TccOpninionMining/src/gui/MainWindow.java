@@ -20,18 +20,20 @@ import javax.swing.border.LineBorder;
 import main.MainClass;
 import utils.ApplicationUtils;
 import utils.Constants;
+import engine.TwitterManager;
 import forms.MainWindowForm;
+
 import javax.swing.ScrollPaneConstants;
 
 public class MainWindow {
 
 	private JFrame frame;
-	private JTextField TF_Search;
-	private JTextField TF_qtd;
-	private JRadioButton rdbtnPorBusca; 
-	private JRadioButton rdbtnStream;
-	private JButton BTN_Search;
-
+	private static JTextField TF_Search;
+	private static JTextField TF_qtd;
+	private static JRadioButton rdbtnPorBusca; 
+	private static JRadioButton rdbtnStream;
+	private static JButton BTN_Search;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -170,7 +172,9 @@ public class MainWindow {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(validate()){
-					makeAllComponentsDisabled();
+					if(rdbtnStream.isSelected()){
+						makeAllComponentsDisabled();
+					}
 					MainWindowForm mwf = new MainWindowForm();
 					if(rdbtnPorBusca.isSelected()){
 						mwf.setFetchType(Constants.QUERYTYPE);
@@ -181,21 +185,19 @@ public class MainWindow {
 					}
 					
 					mwf.setKeyWords(TF_Search.getText());
-//					MainClass.initializeWork(mwf);
+					MainClass.initializeWork(mwf);
+
 					mwf = ApplicationUtils.getRatingCount();
-					makeAllComponentsEnabled();
-					
-					
+
 					LBL_positive.setText(""+mwf.getPositive());
 					LBL_Neutral.setText(""+mwf.getNeutral());
 					LBL_Negative.setText(""+mwf.getNegative());
 					
 					int total = mwf.getNegative()+mwf.getPositive()+mwf.getNeutral();
 					LBL_quantidade_coletada.setText(""+total);
-					if(rdbtnStream.isSelected()){
-						ApplicationUtils.populateTable();
-					}
-					
+
+					ApplicationUtils.populateTable();
+			
 				}
 			}
 		});
@@ -226,11 +228,12 @@ public class MainWindow {
 		TF_qtd.setEditable(false);
 	}
 	
-	public void makeAllComponentsEnabled(){
+	public static void makeAllComponentsEnabled(){
 		BTN_Search.setEnabled(true);
 		TF_Search.setEditable(true);
 		rdbtnPorBusca.setEnabled(true);
 		rdbtnStream.setEnabled(true);
 		TF_qtd.setEditable(true);
 	}
+
 }

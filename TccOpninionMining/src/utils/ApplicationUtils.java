@@ -40,7 +40,7 @@ public class ApplicationUtils {
 				}
 
 		}
-		MainWindowForm mwf = new MainWindowForm();
+		MainWindowForm mwf = MainWindow.getMainWindowForm();
 		mwf.setPositive(pos);
 		mwf.setNegative(neg);
 		mwf.setNeutral(neu);

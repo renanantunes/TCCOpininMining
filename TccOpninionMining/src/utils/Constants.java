@@ -46,5 +46,9 @@ public class Constants {
 	public final static String POSITIVE = "positive";
 	public final static String NEGATIVE = "negative";
 	public final static String NEUTRAL = "neutral";
+	
+	public final static String PT_POSITIVE = "positivo";
+	public final static String PT_NEGATIVE = "negativo";
+	public final static String PT_NEUTRAL = "neutro";
 		
 }

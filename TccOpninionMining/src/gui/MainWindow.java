@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +21,8 @@ import javax.swing.border.LineBorder;
 import main.MainClass;
 import utils.ApplicationUtils;
 import utils.Constants;
+import engine.FileChooserDirectory;
+import engine.ReportManager;
 import engine.TwitterManager;
 import forms.MainWindowForm;
 
@@ -33,6 +36,8 @@ public class MainWindow {
 	private static JRadioButton rdbtnPorBusca; 
 	private static JRadioButton rdbtnStream;
 	private static JButton BTN_Search;
+	private static MainWindowForm mwf;
+	
 	
 	/**
 	 * Launch the application.
@@ -62,7 +67,7 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 890, 613);
+		frame.setBounds(100, 100, 890, 690);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -168,6 +173,23 @@ public class MainWindow {
 		
 		panel_2.add(scrollPane);
 		
+		JButton btnRelatorio = new JButton("Gerar Relat—rio");
+		btnRelatorio.setBounds(750, 550, 120, 25);
+		frame.add(btnRelatorio);
+		
+		btnRelatorio.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0){
+				String savePath = FileChooserDirectory.initialize();
+				boolean success = ReportManager.generateReport(savePath, mwf);
+				if(success){
+					JOptionPane.showMessageDialog(null, "Relat—rio exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "Erro ao criar relat—rio", "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		
 		BTN_Search.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -175,7 +197,7 @@ public class MainWindow {
 					if(rdbtnStream.isSelected()){
 						makeAllComponentsDisabled();
 					}
-					MainWindowForm mwf = new MainWindowForm();
+					mwf = new MainWindowForm();
 					if(rdbtnPorBusca.isSelected()){
 						mwf.setFetchType(Constants.QUERYTYPE);
 						mwf.setQuantity(Integer.parseInt(TF_qtd.getText()));
@@ -234,6 +256,10 @@ public class MainWindow {
 		rdbtnPorBusca.setEnabled(true);
 		rdbtnStream.setEnabled(true);
 		TF_qtd.setEditable(true);
+	}
+	
+	public static MainWindowForm getMainWindowForm(){
+		return mwf;
 	}
 
 }

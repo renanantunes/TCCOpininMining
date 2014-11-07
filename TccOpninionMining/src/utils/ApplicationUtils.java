@@ -52,6 +52,14 @@ public class ApplicationUtils {
 				TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
 			}
 	}
-
+	
+	public static String getCategoryName(int code){
+		switch(code){
+			case 0 : return Categories.POSITIVE.getCategoryName();
+			case 1 : return Categories.NEGATIVE.getCategoryName();
+			case 2 : return Categories.NEUTRAL.getCategoryName();
+			default : return null;
+		}
+	}
 	
 }

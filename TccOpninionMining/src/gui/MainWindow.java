@@ -177,18 +177,18 @@ public class MainWindow {
 		btnRelatorio.setBounds(750, 550, 120, 25);
 		frame.add(btnRelatorio);
 		
-		btnRelatorio.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0){
-				String savePath = FileChooserDirectory.initialize();
-				boolean success = ReportManager.generateReport(savePath, mwf);
-				if(success){
-					JOptionPane.showMessageDialog(null, "Relat—rio exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-				}else{
-					JOptionPane.showMessageDialog(null, "Erro ao criar relat—rio", "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-		});
+//		btnRelatorio.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent arg0){
+//				String savePath = FileChooserDirectory.initialize();
+//				boolean success = ReportManager.generateReport(savePath, mwf);
+//				if(success){
+//					JOptionPane.showMessageDialog(null, "Relat—rio exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+//				}else{
+//					JOptionPane.showMessageDialog(null, "Erro ao criar relat—rio", "Erro", JOptionPane.ERROR_MESSAGE);
+//				}
+//				
+//			}
+//		});
 		
 		BTN_Search.addMouseListener(new MouseAdapter() {
 			@Override

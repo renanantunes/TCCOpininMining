@@ -10,8 +10,10 @@ import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
   
 public class PDFHandler {
@@ -25,6 +27,12 @@ public class PDFHandler {
 			doc = new Document(PageSize.A4, 72, 72, 72, 72);
 			writer = PdfWriter.getInstance(doc, os);
 			doc.open();
+			
+			Paragraph title = new Paragraph("Titulo", new Font(Font.FontFamily.TIMES_ROMAN, 18,Font.BOLD));
+			Paragraph date = new Paragraph("data", new Font(Font.FontFamily.TIMES_ROMAN, 12));
+			
+			
+			
 			BufferedImage bufferedImage = chart.createBufferedImage(300, 300);
 			Image image = Image.getInstance(writer, bufferedImage, 1.0f);
 			doc.add(image);

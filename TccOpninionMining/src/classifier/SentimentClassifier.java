@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import beans.Tweet;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 
@@ -27,10 +28,12 @@ public class SentimentClassifier {
 	 * Agora falta apenas implementar no nosso código, porém não sei se teremos que fazer outra tela ou o que para deixa separado
 	 * classificação e coleta
 	 */
-	public String openNlpClassify(String inputText){
+	public Tweet openNlpClassify(Tweet tweet){
 		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(m);
-		double[] outcomes = myCategorizer.categorize(inputText);
-		String category = myCategorizer.getBestCategory(outcomes);
-		return category;
+		double[] outcomes = myCategorizer.categorize(tweet.getTweet());
+		tweet.setRating(myCategorizer.getBestCategory(outcomes));
+		tweet.setScore(outcomes);
+		return tweet;
 	}
+
 }

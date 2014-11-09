@@ -8,6 +8,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
 
+import utils.Categories;
 import beans.AbstractChart;
 import beans.Report;
 
@@ -35,9 +36,9 @@ public class PieChart extends AbstractChart {
 	@Override
 	public Dataset createDataset(Report report) {
         DefaultPieDataset result = new DefaultPieDataset();
-//        result.setValue(Constants.PT_POSITIVE, mwf.getPositive());
-//        result.setValue(Constants.PT_NEGATIVE, mwf.getNegative());
-//        result.setValue(Constants.PT_NEUTRAL, mwf.getNeutral());
+        result.setValue(Categories.POSITIVE.getCategoryName(), report.getTweetsPerCategory()[0]);
+        result.setValue(Categories.NEGATIVE.getCategoryName(), report.getTweetsPerCategory()[1]);
+        result.setValue(Categories.NEUTRAL.getCategoryName(), report.getTweetsPerCategory()[2]);
         return result;  
 	}
 }

@@ -1,22 +1,37 @@
 package utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import main.MainClass;
+import beans.Report;
+import beans.Terms;
+import beans.Tweet;
 import forms.MainWindowForm;
 import gui.MainWindow;
 import gui.TableHandler;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import main.MainClass;
-import beans.Tweet;
-
 public class ApplicationUtils {
 	
-	public static String createFormatDate(String pattern){
-		String formatedDate;
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		formatedDate = sdf.format(c.getTime());
+	public static Date createFormatDate(Date date){
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATEFORMAT2);
+			String formatedDate = sdf.format(date);
+			date = sdf.parse(formatedDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return date;
+	}
+	
+	public static String parseDateToString(Date date){
+		String formatedDate = null;
+		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATEFORMAT2);
+		formatedDate = sdf.format(date);
 		
 		return formatedDate;
 	}
@@ -62,4 +77,43 @@ public class ApplicationUtils {
 		}
 	}
 	
+	public static Report createReport(MainWindowForm mwf){
+		ArrayList<Tweet> tweets = MainClass.tweetList;
+		int tweetsPerCategory[] = {mwf.getPositive(), mwf.getNegative(), mwf.getNeutral()};
+		
+		return new Report(tweets, getDateRange(tweets), "Relatorio da Pesquisa", MainClass.terms, tweetsPerCategory);
+	}
+	
+	public static String getDateRange(List<Tweet> tweets){
+		Date recent = null;
+		Date old = null;
+		for (Tweet tweet : tweets) {
+			if(recent == null && old == null){
+				recent = old = tweet.getDate();
+			}else{
+				if(tweet.getDate().after(recent)){
+					recent = tweet.getDate();
+				}else if(tweet.getDate().before(old)){
+					old = tweet.getDate();
+				}
+			}
+		}
+		
+		if(old.compareTo(recent)==0){
+			return parseDateToString(old);
+		}else{
+			return parseDateToString(old) + " - " + parseDateToString(recent);
+		}
+	}
+	
+	public static List<Terms> getTerm(String tweet){
+		List<Terms> terms = new ArrayList<Terms>();
+		
+		for (Terms term : MainClass.terms) {
+			if(tweet.contains(term.getName()));
+				terms.add(term);
+		}
+		
+		return terms;
+	}
 }

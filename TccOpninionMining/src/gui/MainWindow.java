@@ -28,6 +28,8 @@ import forms.MainWindowForm;
 
 import javax.swing.ScrollPaneConstants;
 
+import beans.Report;
+
 public class MainWindow {
 
 	private JFrame frame;
@@ -180,6 +182,7 @@ public class MainWindow {
 //		btnRelatorio.addMouseListener(new MouseAdapter() {
 //			public void mouseClicked(MouseEvent arg0){
 //				String savePath = FileChooserDirectory.initialize();
+//				Report report = 
 //				boolean success = ReportManager.generateReport(savePath, mwf);
 //				if(success){
 //					JOptionPane.showMessageDialog(null, "Relat—rio exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);

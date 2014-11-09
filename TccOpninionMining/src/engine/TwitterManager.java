@@ -32,7 +32,6 @@ public class TwitterManager
 	private SentimentClassifier sentimentClassifier;
 	private Twitter twitter;
 	private static TwitterStream twitterStream;
-	private String formatedDate;
 	
 	
 	public TwitterManager()
@@ -98,8 +97,7 @@ public class TwitterManager
             	MainClass.tweetList.add(tweet);
             	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
             	StreamDialog.textArea.setText(StreamDialog.textArea.getText()+"\n"+tweet.getTweet());
-            	System.out.println(tweet.toString());
-            	
+            	System.out.println(tweet.toString());	
             }
         	
             @Override
@@ -157,14 +155,16 @@ public class TwitterManager
 	
 	private Tweet createTweet(Status status)
 	{
-		formatedDate = ApplicationUtils.createFormatDate(Constants.DATEFORMAT1);
+
 		
 		Tweet tweet = new Tweet();
 		tweet.setId(status.getId());
     	tweet.setUser(status.getUser().getScreenName());
     	tweet.setTweet(status.getText());
-    	tweet.setDate(formatedDate);
-    	tweet.setRating(sentimentClassifier.openNlpClassify(tweet.getTweet()));
+    	tweet.setDate(ApplicationUtils.createFormatDate(status.getCreatedAt()));
+    	System.out.println(ApplicationUtils.createFormatDate(status.getCreatedAt()));
+    	tweet = sentimentClassifier.openNlpClassify(tweet);
+    	tweet.setTerm(ApplicationUtils.getTerm(status.getText()));
     	
 		return tweet;
 	}

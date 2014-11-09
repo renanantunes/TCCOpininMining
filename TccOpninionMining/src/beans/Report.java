@@ -1,25 +1,28 @@
 package beans;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 public class Report {
-	private Map<String,Tweet> tweets;
+	private List<Tweet> tweets;
 	private String date;
 	private String title;
 	private ArrayList<Terms> terms;
+	private int tweetsPerCategory[];
 
-	public Report(Map<String, Tweet> tweets, String date, String title, ArrayList<Terms> terms) {
+
+	public Report(List<Tweet> tweets, String date, String title, ArrayList<Terms> terms, int tweetsPerCategory[]) {
 		this.tweets = tweets;
 		this.date = date;
 		this.title = title;
 		this.terms = terms;
+		this.tweetsPerCategory = tweetsPerCategory;
 	}
 	
-	public Map<String, Tweet> getTweets() {
+	public List<Tweet> getTweets() {
 		return tweets;
 	}
-	public void setTweets(Map<String, Tweet> tweets) {
+	public void setTweets(List<Tweet> tweets) {
 		this.tweets = tweets;
 	}
 	public String getDate() {
@@ -42,5 +45,11 @@ public class Report {
 	public void setTerms(ArrayList<Terms> terms) {
 		this.terms = terms;
 	}
-	
+	public int[] getTweetsPerCategory() {
+		return tweetsPerCategory;
+	}
+
+	public void setTweetsPerCategory(int[] tweetsPerCategory) {
+		this.tweetsPerCategory = tweetsPerCategory;
+	}
 }

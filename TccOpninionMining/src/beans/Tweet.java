@@ -1,12 +1,15 @@
 package beans;
 
+import java.util.Date;
+import java.util.List;
+
 public class Tweet{
 	private long id;
 	private String user;
 	private String tweet;
-	private String date;
+	private Date date;
 	private String rating;
-	private String term;
+	private List<Terms> term;
 	private double score[];
 	
 	public long getId() {
@@ -27,10 +30,10 @@ public class Tweet{
 	public void setTweet(String tweet) {
 		this.tweet = tweet.replaceAll("\n", " ");
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public String getRating() {
@@ -40,10 +43,10 @@ public class Tweet{
 		this.rating = rating;
 	}
 	
-	public String getTerm() {
+	public List<Terms> getTerm() {
 		return term;
 	}
-	public void setTerm(String term) {
+	public void setTerm(List<Terms> term) {
 		this.term = term;
 	}
 	public double[] getScore() {

@@ -10,6 +10,10 @@ public class Terms {
 		this.natScore = natScore;
 		this.absoluteScore = absoluteScore;
 	}
+	
+	public Terms(String name){
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;

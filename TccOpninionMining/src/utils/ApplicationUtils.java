@@ -106,14 +106,49 @@ public class ApplicationUtils {
 		}
 	}
 	
-	public static List<Terms> getTerm(String tweet){
-		List<Terms> terms = new ArrayList<Terms>();
+	public static List<String> getTerm(String tweet){
+		List<String> terms = new ArrayList<String>();
 		
 		for (Terms term : MainClass.terms) {
 			if(tweet.contains(term.getName()));
-				terms.add(term);
+				terms.add(term.getName());
 		}
 		
 		return terms;
+	}
+	
+	public static void populateTermsStats(){
+		for (Terms term : MainClass.terms) {
+			for (Tweet tweet : MainClass.tweetList) {
+				if(tweet.getTerm().contains(term.getName())){
+					int natScore[] = term.getNatScore();
+					double absoluteScore[] = term.getAbsoluteScore();
+					boolean isFirst = false;
+					
+					if(tweet.getRating().equalsIgnoreCase(Categories.POSITIVE.categoryNameEN))
+						natScore[Categories.POSITIVE.getCode()] +=1;
+					else if(tweet.getRating().equalsIgnoreCase(Categories.NEGATIVE.categoryNameEN))
+						natScore[Categories.NEGATIVE.getCode()] +=1;
+					else if(tweet.getRating().equalsIgnoreCase(Categories.NEUTRAL.categoryNameEN))
+						natScore[Categories.NEUTRAL.getCode()] +=1;
+					
+					term.setNatScore(natScore);
+					
+					if(absoluteScore[0]==0){
+						isFirst=true;
+					}
+					
+					for (int i = 0; i < absoluteScore.length; i++) {
+						absoluteScore[i] = tweet.getScore()[i];
+						if(!isFirst){
+							absoluteScore[i] = absoluteScore[i]/2;
+						}
+					}
+					
+					term.setAbsoluteScore(absoluteScore);
+					
+				}
+			}
+		}
 	}
 }

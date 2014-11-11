@@ -2,10 +2,10 @@ package beans;
 
 public class Terms {
 	private String name;
-	private double natScore[];
+	private int natScore[];
 	private double absoluteScore[];
 	
-	public Terms(String name, double[]natScore, double[]absoluteScore){
+	public Terms(String name, int[]natScore, double[]absoluteScore){
 		this.name = name;
 		this.natScore = natScore;
 		this.absoluteScore = absoluteScore;
@@ -13,6 +13,8 @@ public class Terms {
 	
 	public Terms(String name){
 		this.name = name;
+		natScore = new int[3];
+		absoluteScore = new double[3];
 	}
 
 	public String getName() {
@@ -23,11 +25,11 @@ public class Terms {
 		this.name = name;
 	}
 
-	public double[] getNatScore() {
+	public int[] getNatScore() {
 		return natScore;
 	}
 
-	public void setNatScore(double[] natScore) {
+	public void setNatScore(int[] natScore) {
 		this.natScore = natScore;
 	}
 

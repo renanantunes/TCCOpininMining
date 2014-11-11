@@ -9,7 +9,7 @@ public class Tweet{
 	private String tweet;
 	private Date date;
 	private String rating;
-	private List<Terms> term;
+	private List<String> term;
 	private double score[];
 	
 	public long getId() {
@@ -43,10 +43,10 @@ public class Tweet{
 		this.rating = rating;
 	}
 	
-	public List<Terms> getTerm() {
+	public List<String> getTerm() {
 		return term;
 	}
-	public void setTerm(List<Terms> term) {
+	public void setTerm(List<String> term) {
 		this.term = term;
 	}
 	public double[] getScore() {

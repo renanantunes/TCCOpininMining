@@ -5,9 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -20,7 +22,7 @@ public class PDFHandler {
 	private static Document doc = null;
 	private static PdfWriter writer = null;
 	
-	public static boolean createPDF(String savePath, JFreeChart chart){
+	public static boolean createPDF(String savePath, List<JFreeChart> chartList){
 		boolean success = true;
 		try {
 			OutputStream os = new FileOutputStream(savePath);
@@ -30,12 +32,11 @@ public class PDFHandler {
 			
 			Paragraph title = new Paragraph("Titulo", new Font(Font.FontFamily.TIMES_ROMAN, 18,Font.BOLD));
 			Paragraph date = new Paragraph("data", new Font(Font.FontFamily.TIMES_ROMAN, 12));
+			doc.add(title);
+			doc.add(date);
 			
+			populatePDF(chartList);
 			
-			
-			BufferedImage bufferedImage = chart.createBufferedImage(300, 300);
-			Image image = Image.getInstance(writer, bufferedImage, 1.0f);
-			doc.add(image);
 			doc.close();
 			doc = null;
 			os.close();
@@ -63,5 +64,21 @@ public class PDFHandler {
             }
 		}
 		return success;
-	} 
+	}
+	
+	private static void populatePDF(List<JFreeChart> chartList){
+		for (JFreeChart jFreeChart : chartList) {
+			try {
+				BufferedImage bufferedImage = jFreeChart.createBufferedImage(300, 300);
+				Image image = Image.getInstance(writer, bufferedImage, 1.0f);
+				doc.add(image);
+			} catch (BadElementException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
 }

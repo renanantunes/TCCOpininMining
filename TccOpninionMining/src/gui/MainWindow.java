@@ -3,11 +3,14 @@ package gui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import main.MainClass;
@@ -25,6 +29,10 @@ import beans.Report;
 import engine.FileChooserDirectory;
 import engine.ReportManager;
 import forms.MainWindowForm;
+import net.miginfocom.swing.MigLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class MainWindow {
 
@@ -64,8 +72,10 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 890, 690);
+		frame.setBounds(100, 100, 890, 625);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -130,35 +140,75 @@ public class MainWindow {
 		LBL_quantidade_coletada.setBounds(181, 16, 46, 14);
 		panel_1.add(LBL_quantidade_coletada);
 		
+		JPanel tabela = new JPanel();
+		tabela.setBounds(10, 37, 405, 59);
+		panel_1.add(tabela);
+		tabela.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		tabela.add(panel_3);
+		panel_3.setBorder(new LineBorder(null, 0));
+		panel_3.setBackground(SystemColor.menu);
+		panel_3.setLayout(null);
+		
+		JPanel panel_green = new JPanel();
+		panel_green.setBounds(7, 7, 15, 15);
+		panel_green.setBackground(new Color(50, 205, 50));
+		panel_3.add(panel_green);
+		panel_green.setBorder(new LineBorder(null, 0, true));
+		
 		JLabel lblNewLabel = new JLabel("Positivo");
+		lblNewLabel.setBounds(0, 0, 135, 29);
+		panel_3.add(lblNewLabel);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(10, 47, 67, 25);
-		panel_1.add(lblNewLabel);
+		
+		JPanel panel_4 = new JPanel();
+		tabela.add(panel_4);
+		panel_4.setLayout(null);
 		
 		JLabel label = new JLabel("Negativo");
+		label.setBounds(0, 0, 135, 29);
+		panel_4.add(label);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label.setBounds(170, 47, 67, 25);
-		panel_1.add(label);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new LineBorder(null, 0, true));
+		panel_5.setBackground(Color.RED);
+		panel_5.setBounds(7, 7, 15, 15);
+		panel_4.add(panel_5);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setLayout(null);
+		tabela.add(panel_6);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new LineBorder(null, 0, true));
+		panel_7.setBackground(new Color(255, 255, 0));
+		panel_7.setBounds(7, 7, 15, 15);
+		panel_6.add(panel_7);
 		
 		JLabel lblNeutro = new JLabel("Neutro");
+		lblNeutro.setBounds(0, 0, 135, 29);
+		panel_6.add(lblNeutro);
+		lblNeutro.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNeutro.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNeutro.setBounds(313, 47, 67, 25);
-		panel_1.add(lblNeutro);
 		
 		final JLabel LBL_positive = new JLabel("");
+		LBL_positive.setHorizontalAlignment(SwingConstants.CENTER);
+		tabela.add(LBL_positive);
 		LBL_positive.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_positive.setBounds(20, 65, 98, 26);
-		panel_1.add(LBL_positive);
 		
 		final JLabel LBL_Negative = new JLabel("");
+		LBL_Negative.setHorizontalAlignment(SwingConstants.CENTER);
+		tabela.add(LBL_Negative);
 		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_Negative.setBounds(181, 65, 98, 26);
-		panel_1.add(LBL_Negative);
 		
 		final JLabel LBL_Neutral = new JLabel("");
+		LBL_Neutral.setHorizontalAlignment(SwingConstants.CENTER);
+		tabela.add(LBL_Neutral);
 		LBL_Neutral.setFont(new Font("Tahoma", Font.BOLD, 15));
-		LBL_Neutral.setBounds(323, 65, 98, 26);
-		panel_1.add(LBL_Neutral);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -167,13 +217,13 @@ public class MainWindow {
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane(TableHandler.getTable());
-		scrollPane.setBounds(10, 6, 834, 378);
+		scrollPane.setBounds(10, 7, 834, 378);
 		
 		panel_2.add(scrollPane);
 		
-		JButton btnRelatorio = new JButton("Gerar Relat—rio");
-		btnRelatorio.setBounds(750, 550, 120, 25);
-		frame.add(btnRelatorio);
+		JButton btnRelatorio = new JButton("Gerar Relatório");
+		btnRelatorio.setBounds(745, 550, 120, 25);
+		frame.getContentPane().add(btnRelatorio);
 		
 		btnRelatorio.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0){
@@ -183,9 +233,9 @@ public class MainWindow {
 				Report report = ApplicationUtils.createReport(mwf);
 				boolean success = ReportManager.generateReport(savePath, report);
 				if(success){
-					JOptionPane.showMessageDialog(null, "Relat—rio exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Relatório exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 				}else{
-					JOptionPane.showMessageDialog(null, "Erro ao criar relat—rio", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Erro ao criar relatório", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -213,8 +263,8 @@ public class MainWindow {
 					mwf = ApplicationUtils.getRatingCount();
 
 					LBL_positive.setText(""+mwf.getPositive());
-					LBL_Neutral.setText(""+mwf.getNeutral());
-					LBL_Negative.setText(""+mwf.getNegative());
+					LBL_Negative.setText(""+mwf.getNeutral());
+					LBL_Neutral.setText(""+mwf.getNegative());
 					
 					int total = mwf.getNegative()+mwf.getPositive()+mwf.getNeutral();
 					LBL_quantidade_coletada.setText(""+total);
@@ -262,5 +312,4 @@ public class MainWindow {
 	public static MainWindowForm getMainWindowForm(){
 		return mwf;
 	}
-
 }

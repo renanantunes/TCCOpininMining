@@ -1,8 +1,6 @@
 package utils;
 
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Constants {
 
@@ -50,5 +48,10 @@ public class Constants {
 	public final static String PT_POSITIVE = "positivo";
 	public final static String PT_NEGATIVE = "negativo";
 	public final static String PT_NEUTRAL = "neutro";
+	
+	//Chart type
+	public final static String CHARTTYPE_GENERAL = "general";
+	public final static String CHARTTYPE_ABSOLUTESCORE = "abs";
+	public final static String CHARTTYPE_NATSCORE = "nat";
 		
 }

@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import main.MainClass;
 import beans.Report;
@@ -150,5 +152,15 @@ public class ApplicationUtils {
 				}
 			}
 		}
+	}
+	
+	public static Map<Date, Tweet> getTweetsPerDate(List<Tweet> tweets){
+		Map<Date, Tweet> tweetList = new HashMap<Date, Tweet>();
+		
+		for (Tweet tweet : tweets) {
+			tweetList.put(tweet.getDate(), tweet);
+		}
+		
+		return tweetList;
 	}
 }

@@ -3,6 +3,9 @@ package utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +82,15 @@ public class ApplicationUtils {
 		}
 	}
 	
+	public static String getCategoryNameByENName(String name){
+		switch(name){
+			case Constants.POSITIVE : return Categories.POSITIVE.getCategoryName();
+			case Constants.NEGATIVE : return Categories.NEGATIVE.getCategoryName();
+			case Constants.NEUTRAL : return Categories.NEUTRAL.getCategoryName();
+			default : return null;
+		}
+	}
+	
 	public static Report createReport(MainWindowForm mwf){
 		ArrayList<Tweet> tweets = MainClass.tweetList;
 		int tweetsPerCategory[] = {mwf.getPositive(), mwf.getNegative(), mwf.getNeutral()};
@@ -112,7 +124,7 @@ public class ApplicationUtils {
 		List<String> terms = new ArrayList<String>();
 		
 		for (Terms term : MainClass.terms) {
-			if(tweet.contains(term.getName()));
+			if(tweet.toLowerCase().contains(term.getName().toLowerCase()))
 				terms.add(term.getName());
 		}
 		
@@ -135,6 +147,7 @@ public class ApplicationUtils {
 						natScore[Categories.NEUTRAL.getCode()] +=1;
 					
 					term.setNatScore(natScore);
+					term.getTweets().add(tweet);
 					
 					if(absoluteScore[0]==0){
 						isFirst=true;
@@ -154,13 +167,97 @@ public class ApplicationUtils {
 		}
 	}
 	
-	public static Map<Date, Tweet> getTweetsPerDate(List<Tweet> tweets){
-		Map<Date, Tweet> tweetList = new HashMap<Date, Tweet>();
+	public static Map<Date, List<Tweet>> getTweetsPerDate(List<Tweet> tweets){
+		Map<Date, List<Tweet>> tweetList = new HashMap<Date, List<Tweet>>();
+
+		Collections.sort(tweets, new Comparator<Tweet>() {	
+			@Override
+			public int compare(Tweet o1, Tweet o2) {
+			      return o1.getDate().compareTo(o2.getDate());
+			  }
+		});
+		
+		Date dateAux = tweets.get(0).getDate();
+		List<Tweet> tweetsToAdd = new ArrayList<Tweet>();
 		
 		for (Tweet tweet : tweets) {
-			tweetList.put(tweet.getDate(), tweet);
+			if(dateAux.compareTo(tweet.getDate())==0){
+				tweetsToAdd.add(tweet);
+			}else{
+				List<Tweet> newList = new ArrayList<Tweet>();
+				newList.addAll(tweetsToAdd);
+				tweetList.put(dateAux, newList);
+				dateAux = tweet.getDate();
+				tweetsToAdd.clear();
+				tweetsToAdd.add(tweet);
+			}
+		}
+
+		return tweetList;
+	}
+	
+	public static int[] getRatingAvg(Collection<Tweet> tweets){
+		int[] ratingAvg = new int[3];
+		
+		for (Tweet tweet : tweets) {
+			if(tweet.getRating().equalsIgnoreCase(Categories.POSITIVE.categoryNameEN))
+				ratingAvg[Categories.POSITIVE.getCode()]++;
+			else if(tweet.getRating().equalsIgnoreCase(Categories.NEGATIVE.categoryNameEN))
+				ratingAvg[Categories.NEGATIVE.getCode()]++;
+			else if(tweet.getRating().equalsIgnoreCase(Categories.NEUTRAL.categoryNameEN))
+				ratingAvg[Categories.NEUTRAL.getCode()]++;
 		}
 		
-		return tweetList;
+		return ratingAvg;
+	}
+	
+	public static double[] getAbsScoreAvg(Collection<Tweet> tweets){
+		double[] ratingAvg = new double[3];
+		
+		for (Tweet tweet : tweets) {
+			double absoluteScore[] = tweet.getScore();
+			boolean isFirst = false;
+
+			if(ratingAvg[0]==0){
+				isFirst=true;
+			}
+
+			for (int i = 0; i < absoluteScore.length; i++) {
+				ratingAvg[i] += absoluteScore[i];
+				if(!isFirst){
+					ratingAvg[i] = ratingAvg[i]/2;
+				}
+			}
+		}
+		
+		return ratingAvg;
+	}
+	
+	public static String getFormatedTweetCategory(List<String> term){
+		String terms = "";
+		int i = term.size();
+		int j = 0;
+		for (String t : term) {
+			terms += t;
+			if(j != i-1){
+				terms += ", ";
+			}
+		}
+		
+		return terms;
+	}
+	
+	public static String getFormatedTermsName(List<Terms> terms){
+		String termsString = "";
+		int i = terms.size();
+		int j = 0;
+		for (Terms term : terms) {
+			termsString += term.getName();
+			if(j != i-1){
+				termsString += ", ";
+			}
+		}
+		
+		return termsString;
 	}
 }

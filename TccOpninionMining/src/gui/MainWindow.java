@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,10 +28,6 @@ import beans.Report;
 import engine.FileChooserDirectory;
 import engine.ReportManager;
 import forms.MainWindowForm;
-import net.miginfocom.swing.MigLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class MainWindow {
 
@@ -200,15 +195,15 @@ public class MainWindow {
 		tabela.add(LBL_positive);
 		LBL_positive.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		final JLabel LBL_Negative = new JLabel("");
-		LBL_Negative.setHorizontalAlignment(SwingConstants.CENTER);
-		tabela.add(LBL_Negative);
-		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
-		
 		final JLabel LBL_Neutral = new JLabel("");
 		LBL_Neutral.setHorizontalAlignment(SwingConstants.CENTER);
 		tabela.add(LBL_Neutral);
 		LBL_Neutral.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		final JLabel LBL_Negative = new JLabel("");
+		LBL_Negative.setHorizontalAlignment(SwingConstants.CENTER);
+		tabela.add(LBL_Negative);
+		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -233,7 +228,7 @@ public class MainWindow {
 				Report report = ApplicationUtils.createReport(mwf);
 				boolean success = ReportManager.generateReport(savePath, report);
 				if(success){
-					JOptionPane.showMessageDialog(null, "Relatório exportado com sucesso em:\n"+savePath+File.separator+mwf.getKeyWords(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Relatório exportado com sucesso em:\n"+savePath+File.separator+"Relatorio", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					JOptionPane.showMessageDialog(null, "Erro ao criar relatório", "Erro", JOptionPane.ERROR_MESSAGE);
 				}

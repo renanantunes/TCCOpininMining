@@ -32,10 +32,11 @@ public class SentimentClassifier {
 		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(m);
 		double[] outcomes = myCategorizer.categorize(tweet.getTweet());
 		tweet.setRating(myCategorizer.getBestCategory(outcomes));
+		//System.out.println(myCategorizer.getAllResults(outcomes));
 		double[] score = new double[3];
-		score[0] = outcomes[1];
+		score[0] = outcomes[2];
 		score[1] = outcomes[0];
-		score[2] = outcomes[2];
+		score[2] = outcomes[1];
 		tweet.setScore(score);
 		return tweet;
 	}

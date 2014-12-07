@@ -61,4 +61,5 @@ public class Tweet{
 				+ "Date: " + this.getDate() + "\nClassificação: " + this.getRating();
 	}
 
+
 }

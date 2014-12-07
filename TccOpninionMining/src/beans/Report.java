@@ -9,6 +9,7 @@ public class Report {
 	private String title;
 	private ArrayList<Terms> terms;
 	private int tweetsPerCategory[];
+	private Terms termToReport;
 
 
 	public Report(List<Tweet> tweets, String date, String title, ArrayList<Terms> terms, int tweetsPerCategory[]) {
@@ -52,4 +53,14 @@ public class Report {
 	public void setTweetsPerCategory(int[] tweetsPerCategory) {
 		this.tweetsPerCategory = tweetsPerCategory;
 	}
+
+	public Terms getTermToReport() {
+		return termToReport;
+	}
+
+	public void setTermToReport(Terms termToReport) {
+		this.termToReport = termToReport;
+	}
+	
+	
 }

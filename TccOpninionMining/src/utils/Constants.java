@@ -53,5 +53,11 @@ public class Constants {
 	public final static String CHARTTYPE_GENERAL = "general";
 	public final static String CHARTTYPE_ABSOLUTESCORE = "abs";
 	public final static String CHARTTYPE_NATSCORE = "nat";
+	public final static String CHARTTYPE_DATE_NATSCORE = "date_natscore";
+	public final static String CHARTTYPE_DATE_ABSSCORE = "date_absscore";
+	public final static String CHARTTYPE_TERM_PIECHART = "term_piechart";
+	public final static String CHARTTYPE_TERM_ABSSCORE = "term_abs";
+	public final static String CHARTTYPE_TERM_DATE_NATSCORE = "term_date_natscore";
+	public final static String CHARTTYPE_TERM_DATE_ABSSCORE = "term_date_absscore";
 		
 }

@@ -138,7 +138,7 @@ public class PDFHandler {
 		Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
 
 		// insert column headings
-		insertCell(table, "ClassificaÃ§Ã£o", Element.ALIGN_CENTER, 1, bfBold12,
+		insertCell(table, "Classificação", Element.ALIGN_CENTER, 1, bfBold12,
 				null);
 		insertCell(table, "Tweet", Element.ALIGN_CENTER, 1, bfBold12, null);
 		insertCell(table, "Termo", Element.ALIGN_CENTER, 1, bfBold12, null);

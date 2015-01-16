@@ -64,7 +64,7 @@ public class DualAxisChart extends AbstractChart{
 	@Override
 	public JFreeChart createChart(Dataset dataset, String title, String type) {
 		String axisX = "Termo";
-		String axisY = "Classificação";
+		String axisY = "ClassificaÁ„o";
 		
 		switch(type){
 		case Constants.CHARTTYPE_DATE_NATSCORE: 

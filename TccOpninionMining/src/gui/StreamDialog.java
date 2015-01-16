@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import utils.ApplicationUtils;
 import engine.TwitterManager;
 
 public class StreamDialog extends JDialog {
@@ -53,5 +54,6 @@ public class StreamDialog extends JDialog {
 	private void close(){
 		this.dispose();
 		MainWindow.makeAllComponentsEnabled();
+		MainWindow.populateNumbers();
 	}
 }

@@ -37,7 +37,11 @@ public class MainWindow {
 	private static JRadioButton rdbtnPorBusca; 
 	private static JRadioButton rdbtnStream;
 	private static JButton BTN_Search;
-	private static MainWindowForm mwf;
+	public static MainWindowForm mwf;
+	private static JLabel LBL_positive;
+	private static JLabel LBL_Negative;
+	private static JLabel LBL_Neutral;
+	private static JLabel LBL_quantidade_coletada;
 	
 	
 	/**
@@ -130,7 +134,7 @@ public class MainWindow {
 		lblQuantidadeColetada.setBounds(10, 11, 184, 25);
 		panel_1.add(lblQuantidadeColetada);
 		
-		final JLabel LBL_quantidade_coletada = new JLabel("");
+		LBL_quantidade_coletada = new JLabel("");
 		LBL_quantidade_coletada.setFont(new Font("Tahoma", Font.BOLD, 15));
 		LBL_quantidade_coletada.setBounds(181, 16, 46, 14);
 		panel_1.add(LBL_quantidade_coletada);
@@ -190,17 +194,17 @@ public class MainWindow {
 		lblNeutro.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNeutro.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		final JLabel LBL_positive = new JLabel("");
+		LBL_positive = new JLabel("");
 		LBL_positive.setHorizontalAlignment(SwingConstants.CENTER);
 		tabela.add(LBL_positive);
 		LBL_positive.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		final JLabel LBL_Neutral = new JLabel("");
+		LBL_Neutral = new JLabel("");
 		LBL_Neutral.setHorizontalAlignment(SwingConstants.CENTER);
 		tabela.add(LBL_Neutral);
 		LBL_Neutral.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		final JLabel LBL_Negative = new JLabel("");
+		LBL_Negative = new JLabel("");
 		LBL_Negative.setHorizontalAlignment(SwingConstants.CENTER);
 		tabela.add(LBL_Negative);
 		LBL_Negative.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -306,5 +310,16 @@ public class MainWindow {
 	
 	public static MainWindowForm getMainWindowForm(){
 		return mwf;
+	}
+	
+	public static void populateNumbers(){
+		mwf = ApplicationUtils.getRatingCount();
+
+		LBL_positive.setText(""+mwf.getPositive());
+		LBL_Negative.setText(""+mwf.getNeutral());
+		LBL_Neutral.setText(""+mwf.getNegative());
+		
+		int total = mwf.getNegative()+mwf.getPositive()+mwf.getNeutral();
+		LBL_quantidade_coletada.setText(""+total);
 	}
 }

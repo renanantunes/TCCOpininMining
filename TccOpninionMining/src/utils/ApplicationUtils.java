@@ -1,5 +1,6 @@
 package utils;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import main.MainClass;
 import beans.Report;
@@ -120,11 +123,11 @@ public class ApplicationUtils {
 		}
 	}
 	
-	public static List<String> getTerm(String tweet){
+	public static List<String> getTerm(Tweet tweet){
 		List<String> terms = new ArrayList<String>();
 		
 		for (Terms term : MainClass.terms) {
-			if(tweet.toLowerCase().contains(term.getName().toLowerCase()))
+			if(tweet.getTweet().toLowerCase().contains(term.getName().toLowerCase()))
 				terms.add(term.getName());
 		}
 		
@@ -148,6 +151,8 @@ public class ApplicationUtils {
 					
 					term.setNatScore(natScore);
 					term.getTweets().add(tweet);
+					
+					populateWordsCount(term, tweet.getTweetFormated());
 					
 					if(absoluteScore[0]==0){
 						isFirst=true;
@@ -260,4 +265,72 @@ public class ApplicationUtils {
 		
 		return termsString;
 	}
+	
+	public static String removeAcentos(String str) {
+		str = Normalizer.normalize(str, Normalizer.Form.NFD);
+		str = str.replaceAll("[^\\p{ASCII}]", "");
+		return str;
+	}
+	
+	public static String removeUserNameAndURLs(String str){
+		str = str.replace(".", "");
+		str = str.replace(",", "");
+		str = removeUrl(str);
+		return removeUserName(str);
+	}
+	
+	public static String removeStopWords(String str){
+		String strOut = "";
+		String [] words = str.split(" ");
+		for(int i=0; i<words.length; i++){
+			if(!MainClass.stoplist.contains(words[i])){
+				strOut += words[i] + " ";
+			}
+		}	
+		return strOut;
+	}
+	
+	public static String getTweetFormated(String str){
+		str = str.toLowerCase();
+		str = removeAcentos(str);
+		str = removeUserNameAndURLs(str);
+		return removeStopWords(str);
+				
+	}
+	
+	private static void populateWordsCount(Terms term, String tweet){
+		String [] words = tweet.split(" ");
+		for(int i = 0; i<words.length;i++){
+			if(term.getWordsCount().containsKey(words[i])){
+				Long j= term.getWordsCount().get(words[i]);
+				term.getWordsCount().put(words[i], j++);
+			}else{
+				term.getWordsCount().put(words[i], (long) 1);
+			}
+		}
+	}
+	
+	private static String removeUrl(String str){
+        String urlPattern = "((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+        Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(str);
+        int i = 0;
+        while (m.find()) {
+        	str = str.replaceAll(m.group(i),"").trim();
+            i++;
+        }
+        return str;
+    }
+	
+	private static String removeUserName(String str){
+        String urlPattern = "(?<=^|(?<=[^a-zA-Z0-9-_\\.]))@([A-Za-z]+[A-Za-z0-9_]+)";
+        Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(str);
+        int i = 0;
+        while (m.find()) {
+        	str = str.replaceAll(m.group(i),"").trim();
+            i++;
+        }
+        return str;
+    }
 }

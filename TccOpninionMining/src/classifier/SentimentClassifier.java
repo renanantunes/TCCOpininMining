@@ -24,13 +24,13 @@ public class SentimentClassifier {
 	}
 	
 	/**
-	 * É aqui que ocorre toda a mágica, no momento ele recebe aqui o texto a ser classificado e devolve a classificação dele
-	 * Agora falta apenas implementar no nosso código, porém não sei se teremos que fazer outra tela ou o que para deixa separado
-	 * classificação e coleta
+	 * ï¿½ aqui que ocorre toda a mï¿½gica, no momento ele recebe aqui o texto a ser classificado e devolve a classificaï¿½ï¿½o dele
+	 * Agora falta apenas implementar no nosso cï¿½digo, porï¿½m nï¿½o sei se teremos que fazer outra tela ou o que para deixa separado
+	 * classificaï¿½ï¿½o e coleta
 	 */
 	public Tweet openNlpClassify(Tweet tweet){
 		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(m);
-		double[] outcomes = myCategorizer.categorize(tweet.getTweet());
+		double[] outcomes = myCategorizer.categorize(tweet.getTweetFormated());
 		tweet.setRating(myCategorizer.getBestCategory(outcomes));
 		//System.out.println(myCategorizer.getAllResults(outcomes));
 		double[] score = new double[3];

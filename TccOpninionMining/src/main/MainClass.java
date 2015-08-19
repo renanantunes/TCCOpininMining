@@ -1,6 +1,7 @@
 package main;
 
 import engine.TwitterManager;
+import engine.files.TxtHandler;
 import forms.MainWindowForm;
 import gui.MainWindow;
 
@@ -15,6 +16,7 @@ public class MainClass {
 	
 	public static ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 	public static ArrayList<Terms> terms;
+	public static ArrayList<String> stoplist;
 
 	public static void main(String[] args) {
 		
@@ -22,6 +24,7 @@ public class MainClass {
 	}
 	
 	public static void initializeWork(MainWindowForm mwf){
+		TxtHandler.getStopListFromTXT();
 		String keyWords [] = mwf.getKeyWords().split(Constants.COMMA_REGEX);
 		TwitterManager manager = new TwitterManager();
 		terms = new ArrayList<Terms>(keyWords.length);

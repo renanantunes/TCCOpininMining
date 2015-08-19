@@ -160,11 +160,12 @@ public class TwitterManager
 		Tweet tweet = new Tweet();
 		tweet.setId(status.getId());
     	tweet.setUser(status.getUser().getScreenName());
+    	tweet.setTweetFormated(ApplicationUtils.getTweetFormated(status.getText()));
     	tweet.setTweet(status.getText());
     	tweet.setDate(ApplicationUtils.createFormatDate(status.getCreatedAt()));
     	System.out.println(ApplicationUtils.createFormatDate(status.getCreatedAt()));
     	tweet = sentimentClassifier.openNlpClassify(tweet);
-    	tweet.setTerm(ApplicationUtils.getTerm(status.getText()));
+    	tweet.setTerm(ApplicationUtils.getTerm(tweet));
     	
 		return tweet;
 	}

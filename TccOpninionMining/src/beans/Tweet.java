@@ -7,6 +7,7 @@ public class Tweet{
 	private long id;
 	private String user;
 	private String tweet;
+	private String tweetFormated;
 	private Date date;
 	private String rating;
 	private List<String> term;
@@ -55,10 +56,17 @@ public class Tweet{
 	public void setScore(double[] score) {
 		this.score = score;
 	}
+	
+	public String getTweetFormated() {
+		return tweetFormated;
+	}
+	public void setTweetFormated(String tweetFormated) {
+		this.tweetFormated = tweetFormated;
+	}
 	public String toString()
 	{	
 		return "ID: " + this.getId() + "\nUser: " + this.getUser() + "\n" + this.getTweet() + "\n"
-				+ "Date: " + this.getDate() + "\nClassificação: " + this.getRating();
+				+ "Date: " + this.getDate() + "\nClassificaï¿½ï¿½o: " + this.getRating();
 	}
 
 

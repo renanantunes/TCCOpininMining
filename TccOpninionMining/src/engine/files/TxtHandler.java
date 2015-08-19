@@ -1,14 +1,19 @@
 package engine.files;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import main.MainClass;
+import utils.ApplicationUtils;
 
 
 public class TxtHandler {
@@ -91,6 +96,25 @@ public class TxtHandler {
 		
 		return num;
 			
+	}
+	
+	public static void getStopListFromTXT(){
+		File file = new File("stopwords.txt");
+		MainClass.stoplist = new ArrayList<>();
+		FileReader fileReader;
+		BufferedReader reader;
+		try {
+			fileReader = new FileReader(file);
+			reader = new BufferedReader(fileReader);
+			String data = null;
+			while((data = reader.readLine()) != null){
+				MainClass.stoplist.add(ApplicationUtils.removeAcentos(data.toLowerCase()));
+			}
+			fileReader.close();
+			reader.close();
+		} catch (IOException e) {
+			System.err.println("== IOException txtHandler.getStopListFromTXT");
+		}
 	}
 	
 //	public static void newMethodToTrainTheOpenNLPClassifier(){

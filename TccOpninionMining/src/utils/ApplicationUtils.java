@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -303,7 +304,7 @@ public class ApplicationUtils {
 		for(int i = 0; i<words.length;i++){
 			if(term.getWordsCount().containsKey(words[i])){
 				Long j= term.getWordsCount().get(words[i]);
-				term.getWordsCount().put(words[i], j++);
+				term.getWordsCount().put(words[i], j+1);
 			}else{
 				term.getWordsCount().put(words[i], (long) 1);
 			}
@@ -333,4 +334,21 @@ public class ApplicationUtils {
         }
         return str;
     }
+	
+	public static <K,V extends Comparable<? super V>> 
+    	List<Entry<K, V>> entriesSortedByValues(Map<K,V> map) {
+
+		List<Entry<K,V>> sortedEntries = new ArrayList<Entry<K,V>>(map.entrySet());
+
+		Collections.sort(sortedEntries, new Comparator<Entry<K,V>>() {
+			@Override
+			public int compare(Entry<K,V> e1, Entry<K,V> e2) {
+				return e2.getValue().compareTo(e1.getValue());
+			}
+		}
+				);
+
+		return sortedEntries;
+	}
+
 }

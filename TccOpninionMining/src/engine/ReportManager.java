@@ -19,29 +19,29 @@ public class ReportManager {
 	public static boolean generateReport(String path, Report report){
 		boolean success = true;
 		
-		AbstractChart chart = new PieChart("Gráfico geral de resultados obtidos", report, Constants.CHARTTYPE_GENERAL);
+		AbstractChart chart = new PieChart("GrÃ¡fico geral de resultados obtidos", report, Constants.CHARTTYPE_GENERAL);
 		addChartToList(chart.getChart());
-		chart = new DualAxisChart("Gráfico de resultado absoluto por termo", report, Constants.CHARTTYPE_ABSOLUTESCORE);
+		chart = new DualAxisChart("GrÃ¡fico de resultado absoluto por termo", report, Constants.CHARTTYPE_ABSOLUTESCORE);
 		addChartToList(chart.getChart());
-		chart = new DualAxisChart("Gráfico de Tweets por categoria e por data", report, Constants.CHARTTYPE_DATE_NATSCORE);
+		chart = new DualAxisChart("GrÃ¡fico de Tweets por categoria e por data", report, Constants.CHARTTYPE_DATE_NATSCORE);
 		addChartToList(chart.getChart());
-		chart = new DualAxisChart("Gráfico de resultado absoluto por data", report, Constants.CHARTTYPE_DATE_ABSSCORE);
+		chart = new DualAxisChart("GrÃ¡fico de resultado absoluto por data", report, Constants.CHARTTYPE_DATE_ABSSCORE);
 		addChartToList(chart.getChart());
 		
 		if(report.getTerms().size()>1){
 			for (Terms term : report.getTerms()) {
 				report.setTermToReport(term);
 				
-				chart = new PieChart("Gráfico de resultado de Tweets coletados para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_PIECHART);
+				chart = new PieChart("GrÃ¡fico de resultado de Tweets coletados para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_PIECHART);
 				addChartToList(chart.getChart());
 				report.setTermToReport(term);
-				chart = new DualAxisChart("Gráfico de resultado absoluto para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_ABSSCORE);
+				chart = new DualAxisChart("GrÃ¡fico de resultado absoluto para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_ABSSCORE);
 				addChartToList(chart.getChart());
 				report.setTermToReport(term);
-				chart = new DualAxisChart("Gráfico de resultado de Tweets coletados por data para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_DATE_NATSCORE);
+				chart = new DualAxisChart("GrÃ¡fico de resultado de Tweets coletados por data para o termo " + term.getName(), report, Constants.CHARTTYPE_TERM_DATE_NATSCORE);
 				addChartToList(chart.getChart());
 				report.setTermToReport(term);
-				chart = new DualAxisChart("Gráfico de resultado absoluto por data para o termo "+ term.getName(), report, Constants.CHARTTYPE_TERM_DATE_ABSSCORE);
+				chart = new DualAxisChart("GrÃ¡fico de resultado absoluto por data para o termo "+ term.getName(), report, Constants.CHARTTYPE_TERM_DATE_ABSSCORE);
 				addChartToList(chart.getChart());
 			}
 		}

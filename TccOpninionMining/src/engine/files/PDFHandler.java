@@ -5,16 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.jfree.chart.JFreeChart;
-
-import utils.ApplicationUtils;
-import utils.Categories;
-import beans.Report;
-import beans.Terms;
-import beans.Tweet;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -30,7 +24,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import engine.FileChooserDirectory;
+import beans.Report;
+import beans.Tweet;
+import utils.ApplicationUtils;
+import utils.Categories;
 
 public class PDFHandler {
 	private static Document doc = null;
@@ -75,7 +72,30 @@ public class PDFHandler {
 			p=null;
 			
 			createTable(report.getTweets());
+			
+			p = new Paragraph();
+			addEmptyLine(p, 3);
+			doc.add(p);
+			p=null;
 
+			paragraph = new Paragraph(3f, "Palavras mais encontradas", new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD));
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			doc.add(paragraph);
+			
+			p = new Paragraph();
+			addEmptyLine(p, 3);
+			doc.add(p);
+			p=null;
+			
+			createWordsCountTable(report);
+			
+			p = new Paragraph();
+			addEmptyLine(p, 2);
+			doc.add(p);
+			p=null;
+			
+			
+			
 			doc.close();
 			doc = null;
 			os.close();
@@ -138,7 +158,7 @@ public class PDFHandler {
 		Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
 
 		// insert column headings
-		insertCell(table, "Classificação", Element.ALIGN_CENTER, 1, bfBold12,
+		insertCell(table, "Classificaï¿½ï¿½o", Element.ALIGN_CENTER, 1, bfBold12,
 				null);
 		insertCell(table, "Tweet", Element.ALIGN_CENTER, 1, bfBold12, null);
 		insertCell(table, "Termo", Element.ALIGN_CENTER, 1, bfBold12, null);
@@ -184,6 +204,54 @@ public class PDFHandler {
 		}
 		table.addCell(cell);
 
+	}
+	
+	private static void createWordsCountTable(Report report)
+		throws DocumentException {
+			
+
+			Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+			Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+
+			
+			
+			for (Entry<String, List<Entry<String, Long>>> entry : report.getWordsCount().entrySet()){
+				
+				Paragraph paragraph = new Paragraph(3f, entry.getKey(), new Font(Font.FontFamily.TIMES_ROMAN, 13, Font.BOLD));
+				paragraph.setAlignment(Element.ALIGN_CENTER);
+				doc.add(paragraph);
+				
+				float[] columnWidths = { 2f, 8f};
+				PdfPTable table = new PdfPTable(columnWidths);
+				table.setWidthPercentage(50f);
+				
+				// insert column headings
+				insertCell(table, "Palavra", Element.ALIGN_CENTER, 1, bfBold12,
+						null);
+				insertCell(table, "FrequÃªncia", Element.ALIGN_CENTER, 1, bfBold12, null);
+				table.setHeaderRows(1);
+				
+				List<Entry<String, Long>> words = entry.getValue();
+				
+				for (int i=0; i<10 && i<words.size(); i++){
+					Entry<String, Long> word = words.get(i);
+					insertCell(
+							table,
+							word.getKey(),
+							Element.ALIGN_LEFT, 1, bf12, null);
+					insertCell(table, word.getValue().toString(), Element.ALIGN_LEFT, 1, bf12,
+							null);
+				}
+				
+				
+				Paragraph p = new Paragraph();
+				p.add(table);
+				doc.add(p);
+				p = new Paragraph();
+				addEmptyLine(p, 2);
+				doc.add(p);
+			}
+			
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {

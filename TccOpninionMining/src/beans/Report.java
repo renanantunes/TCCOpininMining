@@ -1,7 +1,12 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import utils.ApplicationUtils;
 
 public class Report {
 	private List<Tweet> tweets;
@@ -10,7 +15,7 @@ public class Report {
 	private ArrayList<Terms> terms;
 	private int tweetsPerCategory[];
 	private Terms termToReport;
-
+	private Map <String,List<Entry<String, Long>>> wordsCount;
 
 	public Report(List<Tweet> tweets, String date, String title, ArrayList<Terms> terms, int tweetsPerCategory[]) {
 		this.tweets = tweets;
@@ -18,6 +23,8 @@ public class Report {
 		this.title = title;
 		this.terms = terms;
 		this.tweetsPerCategory = tweetsPerCategory;
+		this.wordsCount = new HashMap<>();
+		setWordsCount();
 	}
 	
 	public List<Tweet> getTweets() {
@@ -60,6 +67,17 @@ public class Report {
 
 	public void setTermToReport(Terms termToReport) {
 		this.termToReport = termToReport;
+	}
+
+	public Map<String, List<Entry<String, Long>>> getWordsCount() {
+		return wordsCount;
+	}
+
+	public void setWordsCount() {
+		for (Terms term : terms) {
+			List<Entry<String, Long>> wordsCount = ApplicationUtils.entriesSortedByValues(term.getWordsCount());
+			getWordsCount().put(term.getName(), wordsCount);
+		}
 	}
 	
 	

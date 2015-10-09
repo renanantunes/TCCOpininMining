@@ -317,14 +317,14 @@ public class ApplicationUtils {
         Matcher m = p.matcher(str);
         int i = 0;
         while (m.find()) {
-        	str = str.replaceAll(m.group(i),"").trim();
+        	str = str.replaceAll(Pattern.quote(m.group(i)),"").trim();
             i++;
         }
         return str;
     }
 	
 	private static String removeUserName(String str){
-        String urlPattern = "(?<=^|(?<=[^a-zA-Z0-9-_\\.]))@([A-Za-z]+[A-Za-z0-9_]+)";
+        String urlPattern = "^@?(\\w){1,15}$";
         Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(str);
         int i = 0;

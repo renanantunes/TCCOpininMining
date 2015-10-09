@@ -3,6 +3,7 @@ package engine;
 import gui.StreamDialog;
 import gui.TableHandler;
 
+import java.io.File;
 import java.util.List;
 
 import main.MainClass;
@@ -25,6 +26,7 @@ import utils.ApplicationUtils;
 import utils.Constants;
 import beans.Tweet;
 import classifier.SentimentClassifier;
+import engine.files.TxtHandler;
 
 public class TwitterManager 
 {
@@ -50,6 +52,7 @@ public class TwitterManager
 	
 	public void doQuery(String inQuery, int amount)
 	{
+		File file = TxtHandler.createTxt("");
 		twitter = new TwitterFactory(config).getInstance();
 		Query query = new Query(inQuery);
 		query.setCount(amount);
@@ -69,7 +72,7 @@ public class TwitterManager
 					Status status = tweets.get(i);
 					
 					Tweet tweet = createTweet(status);
-	            	
+	            	TxtHandler.writeIntoFile(file, tweet.getTweetFormated());
 	            	MainClass.tweetList.add(tweet); //TODO verificar a necessidade disso
 	            	
 	            	System.out.println(tweet.toString());

@@ -130,7 +130,6 @@ muitas
 muito
 muitos
 na
-nao
 nas
 nem
 nenhum
@@ -253,3 +252,5 @@ vir
 vos
 RT
 :
+ta
+to

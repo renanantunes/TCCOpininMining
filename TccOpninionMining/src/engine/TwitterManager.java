@@ -4,6 +4,7 @@ import gui.StreamDialog;
 import gui.TableHandler;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import main.MainClass;
@@ -72,10 +73,11 @@ public class TwitterManager
 					Status status = tweets.get(i);
 					
 					Tweet tweet = createTweet(status);
-	            	TxtHandler.writeIntoFile(file, tweet.getTweetFormated());
+	            	TxtHandler.writeIntoFile(file, tweet.getRating() + " " + tweet.getTweetFormated());
 	            	MainClass.tweetList.add(tweet); //TODO verificar a necessidade disso
 	            	
 	            	System.out.println(tweet.toString());
+	            	System.out.println(Arrays.toString(tweet.getScore()));
 	            	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
 				}
 			} while((query = queryResult.nextQuery()) != null && count < amount);
@@ -101,6 +103,7 @@ public class TwitterManager
             	TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
             	StreamDialog.textArea.setText(StreamDialog.textArea.getText()+"\n"+tweet.getTweet());
             	System.out.println(tweet.toString());	
+            	System.out.println(tweet.getScore());
             }
         	
             @Override

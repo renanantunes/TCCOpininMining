@@ -7,6 +7,7 @@ import java.io.InputStream;
 import beans.Tweet;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
+import utils.Constants;
 
 
 public class SentimentClassifier {
@@ -24,14 +25,14 @@ public class SentimentClassifier {
 	}
 	
 	/**
-	 * � aqui que ocorre toda a m�gica, no momento ele recebe aqui o texto a ser classificado e devolve a classifica��o dele
-	 * Agora falta apenas implementar no nosso c�digo, por�m n�o sei se teremos que fazer outra tela ou o que para deixa separado
-	 * classifica��o e coleta
+	 * aqui que ocorre toda a magica, no momento ele recebe aqui o texto a ser classificado e devolve a classificação dele
+	 * Agora falta apenas implementar no nosso código, porém não sei se teremos que fazer outra tela ou o que para deixa separado
+	 * classificação e coleta
 	 */
 	public Tweet openNlpClassify(Tweet tweet){
 		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(m);
 		double[] outcomes = myCategorizer.categorize(tweet.getTweetFormated());
-		tweet.setRating(myCategorizer.getBestCategory(outcomes));
+		tweet.setRating(getBestOutcome(outcomes, myCategorizer));
 		//System.out.println(myCategorizer.getAllResults(outcomes));
 		double[] score = new double[3];
 		score[0] = outcomes[2];
@@ -39,6 +40,20 @@ public class SentimentClassifier {
 		score[2] = outcomes[1];
 		tweet.setScore(score);
 		return tweet;
+	}
+	
+	private String getBestOutcome(double[] outcomes, DocumentCategorizerME myCategorizer){
+		double value = -1;
+
+		for(int i = 0; i<outcomes.length; i++){
+			if(value == outcomes[i] || value < 0){
+				value = outcomes[i];
+			}else{
+				return myCategorizer.getBestCategory(outcomes);
+			}
+		}
+		
+		return Constants.DEFAULT_OUTCOME;
 	}
 
 }

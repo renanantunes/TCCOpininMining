@@ -128,7 +128,7 @@ public class ApplicationUtils {
 		List<String> terms = new ArrayList<String>();
 		
 		for (Terms term : MainClass.terms) {
-			if(tweet.getTweet().toLowerCase().contains(term.getName().toLowerCase()))
+			if(ApplicationUtils.removeAcentos(tweet.getTweet().toLowerCase()).contains(ApplicationUtils.removeAcentos(term.getName().toLowerCase())))
 				terms.add(term.getName());
 		}
 		
@@ -302,11 +302,13 @@ public class ApplicationUtils {
 	private static void populateWordsCount(Terms term, String tweet){
 		String [] words = tweet.split(" ");
 		for(int i = 0; i<words.length;i++){
-			if(term.getWordsCount().containsKey(words[i])){
-				Long j= term.getWordsCount().get(words[i]);
-				term.getWordsCount().put(words[i], j+1);
-			}else{
-				term.getWordsCount().put(words[i], (long) 1);
+			if(!words[i].equalsIgnoreCase(removeAcentos(term.getName())) && words[i].trim().length()>0){
+				if(term.getWordsCount().containsKey(words[i])){
+					Long j= term.getWordsCount().get(words[i]);
+					term.getWordsCount().put(words[i], j+1);
+				}else{
+					term.getWordsCount().put(words[i], (long) 1);
+				}
 			}
 		}
 	}

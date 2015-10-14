@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Constants {
 
-	//Dao - N„o mais usado
+	//Dao - N√£o mais usado
 	//public final static String STORENAME = "kvstore";
 	//public final static String HOSTNAME = "localhost";
 	//public final static String HOSTPORT = "5000";
@@ -30,7 +30,7 @@ public class Constants {
 	public final static String COMMA_REGEX = ",";
 	public final static String PIPE_REGEX = "|";
 	
-	//Padrıes
+	//Padr√µes
 	public final static String[] LANGUAGE = {"pt"};
 	
 	//PATH Classifier
@@ -44,6 +44,7 @@ public class Constants {
 	public final static String POSITIVE = "positive";
 	public final static String NEGATIVE = "negative";
 	public final static String NEUTRAL = "neutral";
+	public final static String DEFAULT_OUTCOME = NEUTRAL;
 	
 	public final static String PT_POSITIVE = "positivo";
 	public final static String PT_NEGATIVE = "negativo";

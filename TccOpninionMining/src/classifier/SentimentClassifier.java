@@ -33,6 +33,7 @@ public class SentimentClassifier {
 		DocumentCategorizerME myCategorizer = new DocumentCategorizerME(m);
 		double[] outcomes = myCategorizer.categorize(tweet.getTweetFormated());
 		tweet.setRating(getBestOutcome(outcomes, myCategorizer));
+		//tweet.setPredicates(myCategorizer.getPredicatesMap(tweet.getTweetFormated()));
 		//System.out.println(myCategorizer.getAllResults(outcomes));
 		double[] score = new double[3];
 		score[0] = outcomes[2];

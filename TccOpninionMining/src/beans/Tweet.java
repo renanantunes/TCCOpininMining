@@ -2,6 +2,7 @@ package beans;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Tweet{
 	private long id;
@@ -12,7 +13,8 @@ public class Tweet{
 	private String rating;
 	private List<String> term;
 	private double score[];
-	
+	private Map <String, Double[]> predicates;
+			
 	public long getId() {
 		return id;
 	}
@@ -61,12 +63,18 @@ public class Tweet{
 		return tweetFormated;
 	}
 	public void setTweetFormated(String tweetFormated) {
-		this.tweetFormated = tweetFormated;
+		this.tweetFormated = tweetFormated.replaceAll("\n", " ");
+	}
+	public Map<String, Double[]> getPredicates() {
+		return predicates;
+	}
+	public void setPredicates(Map<String, Double[]> predicates) {
+		this.predicates = predicates;
 	}
 	public String toString()
 	{	
 		return "ID: " + this.getId() + "\nUser: " + this.getUser() + "\n" + this.getTweet() + "\n"
-				+ "Date: " + this.getDate() + "\nClassifica��o: " + this.getRating();
+				+ "Date: " + this.getDate() + "\nClassificação: " + this.getRating();
 	}
 
 

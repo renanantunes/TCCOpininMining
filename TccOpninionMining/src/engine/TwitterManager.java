@@ -73,12 +73,11 @@ public class TwitterManager
 					Status status = tweets.get(i);
 					
 					Tweet tweet = createTweet(status);
-	            	TxtHandler.writeIntoFile(file, tweet.getRating() + " " + tweet.getTweetFormated());
-	            	MainClass.tweetList.add(tweet); //TODO verificar a necessidade disso
+	            	TxtHandler.writeIntoFile(file, tweet.getRating() + " " + ApplicationUtils.formatTweetBeforeSave(tweet.getTweet()));
+	            	MainClass.tweetList.add(tweet); 
 	            	
 	            	System.out.println(tweet.toString());
 	            	System.out.println(Arrays.toString(tweet.getScore()));
-	            	//TableHandler.addRow(new Object[]{tweet.getRating(),tweet.getTweet()});
 				}
 			} while((query = queryResult.nextQuery()) != null && count < amount);
 		}

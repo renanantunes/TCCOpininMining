@@ -15,13 +15,13 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import main.MainClass;
 import beans.Report;
 import beans.Terms;
 import beans.Tweet;
 import forms.MainWindowForm;
 import gui.MainWindow;
 import gui.TableHandler;
+import main.MainClass;
 
 public class ApplicationUtils {
 	
@@ -274,10 +274,11 @@ public class ApplicationUtils {
 	}
 	
 	public static String removeUserNameAndURLs(String str){
-		str = str.replace(".", "");
-		str = str.replace(",", "");
 		str = removeUrl(str);
-		return removeUserName(str);
+		str = removeUserName(str);
+		str = str.replaceAll(":", "");
+		str = str.replaceAll(",", "");
+		return str.replaceAll("\\.", "");
 	}
 	
 	public static String removeStopWords(String str){
@@ -326,13 +327,11 @@ public class ApplicationUtils {
     }
 	
 	private static String removeUserName(String str){
-        String urlPattern = "^@?(\\w){1,15}$";
-        Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
+        String usernamePattern = "@(\\w){1,15}";
+        Pattern p = Pattern.compile(usernamePattern,Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(str);
-        int i = 0;
         while (m.find()) {
-        	str = str.replaceAll(m.group(i),"").trim();
-            i++;
+        	str = str.replaceAll(usernamePattern,"").trim();
         }
         return str;
     }
@@ -351,6 +350,42 @@ public class ApplicationUtils {
 				);
 
 		return sortedEntries;
+	}
+	
+//	private static void getMostImportantWords(Tweet tweet){
+//		int categorieCode = -1;
+//		if(tweet.getRating().equals(Categories.POSITIVE.getCategoryNameEN()))
+//			categorieCode = Categories.POSITIVE.getAPICode();
+//		else if(tweet.getRating().equals(Categories.NEGATIVE.getCategoryNameEN()))
+//			categorieCode = Categories.NEGATIVE.getAPICode();
+//		else if(tweet.getRating().equals(Categories.NEUTRAL.getCategoryNameEN()))
+//			categorieCode = Categories.NEUTRAL.getAPICode();
+//		
+//		Double wordRate = 0.0;
+//		String mostImportantWord = "";
+//		
+//		Iterator entries = tweet.getPredicates().entrySet().iterator();
+//		while (entries.hasNext()) {
+//		  Entry entry = (Entry) entries.next();
+//		  String word = (String) entry.getKey();
+//		  Double [] rating = (Double[]) entry.getValue();
+//		  
+//		  if(rating[categorieCode] > wordRate){
+//			  wordRate = rating[categorieCode];
+//			  mostImportantWord = word;
+//		  }
+//		}
+//	}
+	
+	public static String formatTweetBeforeSave(String str){
+		str = str.toLowerCase();
+		str = str.replaceAll("rt\\s|rt:\\s", "");
+		str = removeUserName(str);
+		str = removeUrl(str);
+		str = str.replaceAll(":", "");
+		str = str.replaceAll(",", "");
+		str = removeAcentos(str);
+		return str.trim();
 	}
 
 }

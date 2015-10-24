@@ -5,6 +5,7 @@ import java.io.File;
 public class Constants {
 
 	//Dao - Não mais usado
+	
 	//public final static String STORENAME = "kvstore";
 	//public final static String HOSTNAME = "localhost";
 	//public final static String HOSTPORT = "5000";

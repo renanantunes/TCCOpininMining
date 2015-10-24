@@ -385,7 +385,7 @@ public class ApplicationUtils {
 		str = str.replaceAll(":", "");
 		str = str.replaceAll(",", "");
 		str = removeAcentos(str);
-		return str.trim();
+		return str.replaceAll("\n", "").trim();
 	}
 
 }

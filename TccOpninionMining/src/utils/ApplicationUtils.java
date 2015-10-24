@@ -276,6 +276,7 @@ public class ApplicationUtils {
 	public static String removeUserNameAndURLs(String str){
 		str = removeUrl(str);
 		str = removeUserName(str);
+		str = removeRepeatedchars(str);
 		str = str.replaceAll(":", "");
 		str = str.replaceAll(",", "");
 		return str.replaceAll("\\.", "");
@@ -336,6 +337,20 @@ public class ApplicationUtils {
         return str;
     }
 	
+	private static String removeRepeatedchars(String str){
+		String regex = "(([A-Za-z])(\\2)(\\s|$)+)";
+        Pattern p = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+        	str = str.replaceAll(regex,"$2 ").trim();
+        }
+        return str;
+	}
+	
+	private static String removeExtraWhitespace(String str){
+		return str.replaceAll("\\s+", " ");
+	}
+	
 	public static <K,V extends Comparable<? super V>> 
     	List<Entry<K, V>> entriesSortedByValues(Map<K,V> map) {
 
@@ -382,10 +397,15 @@ public class ApplicationUtils {
 		str = str.replaceAll("rt\\s|rt:\\s", "");
 		str = removeUserName(str);
 		str = removeUrl(str);
+		str = removeRepeatedchars(str);
 		str = str.replaceAll(":", "");
 		str = str.replaceAll(",", "");
 		str = removeAcentos(str);
-		return str.replaceAll("\n", "").trim();
+		return removeExtraWhitespace(str);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(formatTweetBeforeSave("rt Teestee dee @remocao , dee"));
 	}
 
 }

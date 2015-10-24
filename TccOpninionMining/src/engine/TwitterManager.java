@@ -53,7 +53,7 @@ public class TwitterManager
 	
 	public void doQuery(String inQuery, int amount)
 	{
-		File file = TxtHandler.createTxt("");
+		File file = TxtHandler.createTxt(Constants.PATH);
 		twitter = new TwitterFactory(config).getInstance();
 		Query query = new Query(inQuery);
 		query.setCount(amount);
